@@ -93,7 +93,7 @@ apt install corosync pacemaker pcs
 
 systemctl enable nginx && systemctl start nginx
 
-![screen1](https://github.com/)
+![screen1](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen1.jpg)
 
 Теперь на каждой ноде отдельно, делаем страницу nginx по умолчанию:
 
@@ -101,30 +101,30 @@ Node-1:
 
 echo "This is the default page for node-1.dv.local" | tee /var/www/html/index.nginx-debian.html
 
-![screen2](https://github.com/)
+![screen2](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen2.jpg)
 
 Node-2:
 
 echo "This is the default page for node-2.dv.local" | tee /var/www/html/index.nginx-debian.html
 
-![screen3](https://github.com/)
+![screen3](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen3.jpg)
 
 Активирую и запускаю Pacemaker:
 
 systemctl enable pcsd
 systemctl start pcsd
 
-![screen4](https://github.com/)
+![screen4](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen4.jpg)
 
 При установке pacemaker у нас создался пользователь hacluster, зададим ему пароль:
 
 cat /etc/passwd | grep hacluster
 
-![screen5](https://github.com/)
+![screen5](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen5.jpg)
 
 passwd hacluster
 
-![screen6](https://github.com/)
+![screen6](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen6.jpg)
 
 Развертка кластера
 
@@ -132,7 +132,7 @@ passwd hacluster
 
 pcs host auth node-1.dv.local node-2.dv.local
 
-![screen7](https://github.com/)
+![screen7](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen7.jpg)
 
 Следующим шагом запускаем ноды:
 
@@ -141,24 +141,24 @@ pcs host auth node-1.dv.local node-2.dv.local
 
 service --status-all
 
-![screen8](https://github.com/)
+![screen8](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen8.jpg)
 
 pcs cluster setup mycluster1 node-1.dv.local node-2.dv.local --force
 pcs cluster enable –all
 
-![screen9](https://github.com/)
+![screen9](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen9.jpg)
 
 pcs cluster start –all
 
-![screen10](https://github.com/)
+![screen10](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen10.jpg)
 
 pcs cluster status
 
-![screen11](https://github.com/)
+![screen11](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen11.jpg)
 
 pcs status
 
-![screen12](https://github.com/)
+![screen12](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen12.jpg)
 
 Отключаем вторичные свойства/параметры:
 
@@ -176,7 +176,7 @@ pcs resource create virtual_ip ocf:heartbeat:IPaddr2 ip=192.168.43.100 cidr_netm
 
 pcs status
 
-![screen13](https://github.com/)
+![screen13](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen13.jpg)
 
 Добавлю ресурс веб-сервера nginx:
 
@@ -189,7 +189,7 @@ Error: Agent 'ocf:heartbeat:nginx' is not installed or does not provide valid me
 
 И если сделать через --force, то он добавляется как ресурс, но в статусе стоп:
 
-![screen14](https://github.com/)
+![screen14](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen14.jpg)
 
 Проверим, что при отключении node-1 ресурсы запускаются на node-2.
 
@@ -197,18 +197,18 @@ Error: Agent 'ocf:heartbeat:nginx' is not installed or does not provide valid me
 
 pcs status
 
-![screen15](https://github.com/)
-![screen16](https://github.com/)
+![screen15](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen15.jpg)
+![screen16](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen16.jpg)
 
 Включил первую ноду:
 
-![screen17](https://github.com/)
+![screen17](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen17.jpg)
 
 Осталось запросить статус кластера и убедиться, что адрес присвоен первой ноде.
 
 pcs resource show
 
-![screen18](https://github.com/)
+![screen18](https://github.com/KorolkovDenis/10.3-pacemaker/blob/main/screenshots/screen18.jpg)
 
 
 ---
